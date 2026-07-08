@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python3 *)",
+      "Bash(node *)",
+      "Bash(sips --help)",
+      "Bash(sips *)",
+      "Read(//private/tmp/**)",
+      "Bash(avconvert --help)",
+      "Bash(avconvert --source /Users/test/playground/xtt18/assets/images/photos/photo_09_01.MP4 --preset PresetAppleM4V1080pHD --output /tmp/test_09.mp4 --duration 5 --replace --progress)",
+      "Bash(avconvert --source /Users/test/playground/xtt18/assets/images/photos/photo_09_01.MP4 --preset PresetAppleM4V1080pHD --output /tmp/test_09.m4v --duration 5 --replace --progress)",
+      "Bash(avconvert --source /Users/test/playground/xtt18/assets/images/photos/photo_09_01.MP4 --preset PresetAppleM4V1080pHD --output /tmp/photo_09_01.m4v --replace --progress)"
+    ]
+  }
+}

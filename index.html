@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>许景豪 · 18岁生日快乐</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Silkscreen:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 音频元素 -->
+  <audio id="wavesAudio" src="assets/audio/bgm/waves.mp3" loop preload="auto"></audio>
+  <audio id="bgmAudio" preload="auto"></audio>
+  <audio id="voiceAudio" preload="auto"></audio>
+  <audio id="sfxAudio" preload="auto"></audio>
+
+  <!-- 全局遮罩：用于变黑/变亮过渡 -->
+  <div class="screen-overlay" id="screenOverlay"></div>
+
+  <!-- 场景容器 -->
+  <div class="stage" id="stage">
+
+    <!-- 首页 -->
+    <section class="scene active" id="homeScene" style="background-image: url('assets/images/backgrounds/beach_home.jpg');">
+      <button class="enter-btn" id="enterBtn">ENTER</button>
+    </section>
+
+    <!-- 磁带页 -->
+    <section class="scene" id="cassetteScene" style="background-image: url('assets/images/backgrounds/beach_home.jpg');">
+      <div class="cassette-area" id="cassetteArea">
+        <img src="assets/images/icons/cassette_before.png" alt="磁带" class="cassette-img" id="cassetteImg">
+        <img src="assets/images/icons/cassette_after.png" alt="磁带后" class="cassette-img" id="cassetteAfterImg" style="display: none;">
+        <img src="assets/images/icons/cassette_after_1.png" alt="磁带左" class="cassette-after-img cassette-after-left" id="cassetteAfterLeft" style="display: none;">
+        <img src="assets/images/icons/cassette_after_2.png" alt="磁带右" class="cassette-after-img cassette-after-right" id="cassetteAfterRight" style="display: none;">
+      </div>
+    </section>
+
+    <!-- 贝壳沙滩页 -->
+    <section class="scene" id="shellsScene">
+      <div class="scroll-stage" id="scrollStage">
+        <img src="assets/images/backgrounds/beach_shells.jpg" alt="" class="shells-bg-img" id="shellsBgImg">
+        <div class="shells-layer">
+          <p class="shells-hint" id="shellsHint">好多贝壳啊，捡个贝壳试试吧</p>
+          <div class="shells-container" id="shellsContainer"></div>
+        </div>
+      </div>
+      <div class="controls-panel" id="controlsPanel">
+        <button class="ctrl-btn" id="wavesMuteBtn" title="静音海浪">🌊</button>
+        <button class="ctrl-btn" id="bgmVolDownBtn" title="背景音乐 -">♪-</button>
+        <button class="ctrl-btn" id="bgmVolUpBtn" title="背景音乐 +">♪+</button>
+        <button class="ctrl-btn skip-btn" id="skipBtn" title="跳过">SKIP</button>
+      </div>
+    </section>
+
+    <!-- 蛋糕页 -->
+    <section class="scene" id="cakeScene" style="background-image: url('assets/images/backgrounds/beach_cake.jpg');">
+      <div class="cake-mask" id="cakeMask"></div>
+      <div class="cake-area" id="cakeArea">
+        <img src="assets/images/icons/cake.png" alt="贝壳蛋糕" class="cake-img" id="cakeImg">
+        <img src="assets/images/icons/cake_after.png" alt="贝壳蛋糕后" class="cake-img" id="cakeAfterImg" style="display: none;">
+        <div class="birthday-text" id="birthdayText">
+          <div class="bd-line cn">许景豪先生 18 岁生日快乐</div>
+          <div class="bd-line en">Happy Birthday to Horan</div>
+        </div>
+        <button class="wish-btn" id="wishBtn">许愿 Make a Wish</button>
+        <p class="wish-hint" id="wishHint" style="display: none;">许愿 Make a Wish</p>
+        <button class="blow-btn" id="blowBtn">吹蜡烛</button>
+      </div>
+    </section>
+
+    <!-- 结尾项链页 -->
+    <section class="scene" id="endingScene" style="background-image: url('assets/images/backgrounds/beach_home.jpg');">
+      <div class="ending-area" id="endingArea">
+        <img src="assets/images/icons/necklace.png" alt="贝壳项链" class="necklace-img" id="endingNecklace">
+        <div class="ending-message" id="endingMessage">
+          <p class="ending-line">祝你18岁生日快乐</p>
+          <p class="ending-line">祝你可以勇敢的走向未来</p>
+        </div>
+        <button class="return-btn" id="returnBtn">RETURN</button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Windows 弹窗 -->
+  <div class="win-window" id="winWindow">
+    <div class="win-titlebar">
+      <span class="win-title"></span>
+      <button class="win-close" id="winClose">✕</button>
+    </div>
+    <div class="win-body">
+      <div class="photo-viewer">
+        <button class="photo-nav prev" id="photoPrev">◀</button>
+        <div class="win-photo" id="winPhoto"></div>
+        <button class="photo-nav next" id="photoNext">▶</button>
+      </div>
+      <div class="win-text" id="winText"></div>
+      <div class="win-caption" id="winCaption"></div>
+    </div>
+  </div>
+
+  <!-- 火柴层 -->
+  <div class="match-layer" id="matchLayer">
+    <div class="dark-overlay" id="darkOverlay"></div>
+    <img src="assets/images/icons/match.png" alt="火柴" class="match-img" id="matchImg">
+    <div class="candle-zone" id="candleZone"></div>
+  </div>
+
+  <!-- 闭眼/睁眼动画层 -->
+  <div class="eye-mask" id="eyeMask">
+    <div class="eye-top"></div>
+    <div class="eye-bottom"></div>
+  </div>
+  <div class="eye-open-mask" id="eyeOpenMask"></div>
+
+  <!-- 坏掉的随身听场景 -->
+  <section class="scene" id="brokenCassetteScene">
+    <div class="broken-cassette-area" id="brokenCassetteArea">
+      <img src="assets/images/icons/cassette_after_1.png" alt="磁带左" class="cassette-after-img cassette-after-left" id="brokenAfterLeft" style="display: none;">
+      <img src="assets/images/icons/cassette_after_2.png" alt="磁带右" class="cassette-after-img cassette-after-right" id="brokenAfterRight" style="display: none;">
+      <p class="story-text" id="storyText"></p>
+      <div class="choice-buttons" id="choiceButtons" style="display: none;">
+        <button class="choice-btn repair-btn" id="repairBtn">尝试修复</button>
+        <button class="choice-btn remove-btn" id="removeBtn">摘下耳机</button>
+      </div>
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
