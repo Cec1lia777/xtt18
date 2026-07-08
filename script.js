@@ -251,19 +251,19 @@ function bindEvents() {
   document.addEventListener('touchstart', unlockAudio, { once: true });
 }
 
-// 音频解锁：第一次用户交互时尝试播放并暂停所有 audio，解除浏览器自动播放限制
+// 音频解锁：第一次用户交互时解锁浏览器音频上下文，不干扰现有 audio 元素
 function unlockAudio() {
-  [wavesAudio, bgmAudio, voiceAudio, sfxAudio, birthdayAudio].forEach(audio => {
-    if (!audio || !audio.paused) return;
-    const wasMuted = audio.muted;
-    audio.muted = true;
-    audio.play().then(() => {
-      audio.pause();
-      audio.currentTime = 0;
-    }).catch(() => {}).finally(() => {
-      audio.muted = wasMuted;
-    });
-  });
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+  const ctx = new AudioContext();
+  if (ctx.state === 'suspended') {
+    ctx.resume().catch(() => {});
+  }
+  const buffer = ctx.createBuffer(1, 1, 22050);
+  const source = ctx.createBufferSource();
+  source.buffer = buffer;
+  source.connect(ctx.destination);
+  source.start();
 }
 
 // 切换场景
