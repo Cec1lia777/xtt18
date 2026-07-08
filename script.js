@@ -12,7 +12,7 @@ const shellMediaFiles = [
   ['photo_03_01.JPG', 'photo_03_02.MP4', 'photo_03_03.JPG', 'photo_03_04.JPG', 'photo_03_05.JPG', 'photo_03_06.JPG', 'photo_03_07.MP4', 'photo_03_08.JPG', 'photo_03_09.JPG', 'photo_03_10.JPG', 'photo_03_11.JPG', 'photo_03_12.JPG', 'photo_03_13.jpg', 'photo_03_14.jpg'],   // 贝壳 3
   ['photo_04_01.JPG', 'photo_04_02.jpg', 'photo_04_03.jpg'],   // 贝壳 4
   ['photo_05_01.jpg', 'photo_05_02.jpg'],   // 贝壳 5
-  ['photo_06_01.jpg'],   // 贝壳 6
+  ['photo_06_01.jpg', 'photo_06_02.jpg'],   // 贝壳 6
   ['photo_07_01.JPG', 'photo_07_02.JPG', 'photo_07_03.JPG', 'photo_07_04.JPG', 'photo_07_05.JPG', 'photo_07_06.JPG', 'photo_07_07.JPG', 'photo_07_08.JPG', 'photo_07_09.MP4'],   // 贝壳 7
   ['photo_08_01.jpg'],   // 贝壳 8
   ['photo_09_01.MP4'],   // 贝壳 9
@@ -21,31 +21,20 @@ const shellMediaFiles = [
   ['photo_12_01.JPG', 'photo_12_02.JPG', 'photo_12_03.MP4'],   // 贝壳 12
   ['photo_13_01.JPG', 'photo_13_02.JPG', 'photo_13_03.JPG', 'photo_13_04.JPG', 'photo_13_05.JPG', 'photo_13_06.JPG', 'photo_13_07.JPG', 'photo_13_08.JPG'],   // 贝壳 13
   ['photo_14_01.jpg', 'photo_14_02.jpg', 'photo_14_03.jpg', 'photo_14_04.jpg', 'photo_14_05.jpg', 'photo_14_06.jpg', 'photo_14_07.jpg', 'photo_14_08.jpg', 'photo_14_09.mp4', 'photo_14_10.mp4', 'photo_14_11.mp4'],   // 贝壳 14
-  [  'photo_15_01.jpg',
-  'photo_15_02.jpg',
-  'photo_15_03.jpg',
-  'photo_15_04.jpg',
-  'photo_15_05.MP4',
-  'photo_15_06.MP4',
-  'photo_15_07.jpg',
-  'photo_15_08.jpg',
-  'photo_15_09.jpg',
-  'photo_15_10.jpg',
-  'photo_15_11.jpg',
-  'photo_15_12.jpg',
-  'photo_15_13.jpg',
-  'photo_15_14.jpg',
-  'photo_15_15.jpg',
-  'photo_15_16.jpg',
-  'photo_15_17.jpg',
-  'photo_15_18.jpg',
-  'photo_15_19.MP4',
-  'photo_15_20.MP4'],   // 贝壳 15
-  ['photo_16_01.jpg'],   // 贝壳 16
+  ['photo_15_01.jpg', 'photo_15_02.jpg', 'photo_15_03.jpg', 'photo_15_04.jpg', 'photo_15_05.mp4', 'photo_15_06.mp4', 'photo_15_07.jpg', 'photo_15_08.jpg', 'photo_15_09.jpg', 'photo_15_10.jpg', 'photo_15_11.jpg', 'photo_15_12.jpg', 'photo_15_13.jpg', 'photo_15_14.jpg', 'photo_15_15.jpg', 'photo_15_16.jpg', 'photo_15_17.jpg', 'photo_15_18.jpg', 'photo_15_19.mp4', 'photo_15_20.mp4'],   // 贝壳 15
+  ['photo_16_01.jpg', 'photo_16_02.jpg', 'photo_16_03.jpg', 'photo_16_04.jpg'],   // 贝壳 16
   ['photo_17_01.jpg'],   // 贝壳 17
-  ['photo_18_01.jpg'],   // 贝壳 18
-  ['photo_19_01.jpg'],   // 贝壳 19
-  ['photo_20_01.jpg'],   // 贝壳 20
+  ['photo_18_01.jpg', 'photo_18_02.jpg', 'photo_18_03.jpg', 'photo_18_04.jpg', 'photo_18_05.jpg', 'photo_18_06.jpg', 'photo_18_07.jpg', 'photo_18_08.jpg', 'photo_18_09.jpg', 'photo_18_10.jpg', 'photo_18_11.jpg', 'photo_18_12.jpg', 'photo_18_13.jpg', 'photo_18_14.jpg', 'photo_18_15.mp4', 'photo_18_16.mp4', 'photo_18_17.mp4', 'photo_18_18.mp4', 'photo_18_19.mp4', 'photo_18_20.MP4'],   // 贝壳 18
+  ['photo_19_01.jpg', 'photo_19_02.jpg', 'photo_19_03.jpg', 'photo_19_04.jpg', 'photo_19_05.jpg', 'photo_19_06.jpg'],   // 贝壳 19
+  ['photo_20_01.jpg', 'photo_20_02.jpg', 'photo_20_03.jpg', 'photo_20_04.jpg', 'photo_20_05.jpg', 'photo_20_06.jpg', 'photo_20_07.jpg', 'photo_20_08.jpg', 'photo_20_09.jpg', 'photo_20_10.jpg'],   // 贝壳 20
+];
+
+// 每个贝壳对应的人名（按顺序 1-20）
+const shellNames = [
+  'czy', 'eason', 'fyc', 'lj', 'luke',
+  'ly', 'rjr', 'ss', 'szj', 'tlr',
+  'wrx', 'xjz', 'zyx', 'zyz', 'wsa',
+  'CLY', 'lcy', 'wzy', 'yjx', 'ydd'
 ];
 
 // 自动生成贝壳数据
@@ -53,9 +42,10 @@ const shellsData = shellMediaFiles.map((files, i) => {
   const num = String(i + 1).padStart(2, '0');
   return {
     id: i + 1,
+    name: shellNames[i] || `贝壳 ${i + 1}`,
     shellImage: `assets/images/shells/shell_${num}.png`,
     media: files.map(f => `assets/images/photos/${f}`),
-    texts: files.map((_, idx) => `第 ${i + 1} 个贝壳，第 ${idx + 1} 段文字`),
+    texts: files.map(() => ''),
     voice: `assets/audio/voices/voice_${num}.mp3`
   };
 });
@@ -72,6 +62,7 @@ const wavesAudio = document.getElementById('wavesAudio');
 const bgmAudio = document.getElementById('bgmAudio');
 const voiceAudio = document.getElementById('voiceAudio');
 const sfxAudio = document.getElementById('sfxAudio');
+const birthdayAudio = document.getElementById('birthdayAudio');
 const screenOverlay = document.getElementById('screenOverlay');
 
 const homeScene = document.getElementById('homeScene');
@@ -80,8 +71,34 @@ const shellsScene = document.getElementById('shellsScene');
 const cakeScene = document.getElementById('cakeScene');
 const brokenCassetteScene = document.getElementById('brokenCassetteScene');
 const endingScene = document.getElementById('endingScene');
+const galleryScene = document.getElementById('galleryScene');
+
+const sceneMap = {
+  home: homeScene,
+  cassette: cassetteScene,
+  shells: shellsScene,
+  cake: cakeScene,
+  brokenCassette: brokenCassetteScene,
+  ending: endingScene,
+  gallery: galleryScene
+};
 
 const enterBtn = document.getElementById('enterBtn');
+const menuToggle = document.getElementById('menuToggle');
+const globalMenu = document.getElementById('globalMenu');
+const menuClose = document.getElementById('menuClose');
+const galleryBack = document.getElementById('galleryBack');
+const galleryGrid = document.getElementById('galleryGrid');
+const galleryDetail = document.getElementById('galleryDetail');
+const galleryDetailClose = document.getElementById('galleryDetailClose');
+const galleryDetailShell = document.getElementById('galleryDetailShell');
+const galleryDetailName = document.getElementById('galleryDetailName');
+const galleryVoiceBtn = document.getElementById('galleryVoiceBtn');
+const galleryDetailMedia = document.getElementById('galleryDetailMedia');
+const galleryDetailText = document.getElementById('galleryDetailText');
+const galleryDetailCaption = document.getElementById('galleryDetailCaption');
+const galleryDetailPrev = document.getElementById('galleryDetailPrev');
+const galleryDetailNext = document.getElementById('galleryDetailNext');
 const cassetteImg = document.getElementById('cassetteImg');
 const cassetteAfterImg = document.getElementById('cassetteAfterImg');
 const cassetteAfterLeft = document.getElementById('cassetteAfterLeft');
@@ -92,6 +109,7 @@ const scrollStage = document.getElementById('scrollStage');
 const shellsBgImg = document.getElementById('shellsBgImg');
 
 const winWindow = document.getElementById('winWindow');
+const winTitle = document.querySelector('.win-title');
 const winClose = document.getElementById('winClose');
 const winPhoto = document.getElementById('winPhoto');
 const winText = document.getElementById('winText');
@@ -121,8 +139,13 @@ const wishHint = document.getElementById('wishHint');
 const blowBtn = document.getElementById('blowBtn');
 const birthdayText = document.getElementById('birthdayText');
 const endingNecklace = document.getElementById('endingNecklace');
+const endingLetter = document.getElementById('endingLetter');
+const endingBottle = document.getElementById('endingBottle');
+const giftGroup = document.getElementById('giftGroup');
+const letterOverlay = document.getElementById('letterOverlay');
 const endingMessage = document.getElementById('endingMessage');
 const returnBtn = document.getElementById('returnBtn');
+const meowBtn = document.getElementById('meowBtn');
 
 const wavesMuteBtn = document.getElementById('wavesMuteBtn');
 const bgmVolDownBtn = document.getElementById('bgmVolDownBtn');
@@ -136,6 +159,7 @@ const BG_TOP_MARGIN = 800;
 
 // 状态
 let currentScene = 'home';
+let previousScene = 'home';
 let collectedShells = new Set();
 let currentShellIndex = null;
 let currentPhotoIndex = 0;
@@ -144,6 +168,9 @@ let isCassetteClicked = false;
 let hasFinished = sessionStorage.getItem('hasFinished') === 'true';
 let wavesMuted = false;
 let bgmVolume = 0.35;
+let galleryShellIndex = null;
+let galleryPhotoIndex = 0;
+let galleryVoicePlaying = false;
 
 // 初始化
 function init() {
@@ -158,12 +185,25 @@ function init() {
 // 绑定事件
 function bindEvents() {
   enterBtn.addEventListener('click', enterCassetteScene);
+  menuToggle.addEventListener('click', openMenu);
+  menuClose.addEventListener('click', closeMenu);
+  document.querySelectorAll('.menu-item').forEach(btn => {
+    btn.addEventListener('click', () => clickMenuItem(btn.dataset.scene));
+  });
   cassetteImg.addEventListener('click', clickCassette);
   winClose.addEventListener('click', closeWindow);
   photoPrev.addEventListener('click', () => changePhoto(-1));
   photoNext.addEventListener('click', () => changePhoto(1));
   blowBtn.addEventListener('click', blowCandle);
   wishBtn.addEventListener('click', startWish);
+  letterOverlay.addEventListener('click', closeLetterZoom);
+
+  // 画廊
+  galleryBack.addEventListener('click', backFromGallery);
+  galleryDetailClose.addEventListener('click', closeGalleryDetail);
+  galleryDetailPrev.addEventListener('click', () => changeGalleryPhoto(-1));
+  galleryDetailNext.addEventListener('click', () => changeGalleryPhoto(1));
+  galleryVoiceBtn.addEventListener('click', toggleGalleryVoice);
 
   // 贝壳页空白处点击显示提示
   shellsScene.addEventListener('click', (e) => {
@@ -182,8 +222,8 @@ function bindEvents() {
   skipBtn.addEventListener('click', skipToCake);
 
   // ending 页
-  endingNecklace.addEventListener('click', showEndingMessage);
-  returnBtn.addEventListener('click', returnToHome);
+  returnBtn.addEventListener('click', closeGiftView);
+  meowBtn.addEventListener('click', returnToHome);
 
   // 坏掉的随身听场景
   storyText.addEventListener('click', advanceStoryText);
@@ -197,22 +237,23 @@ function bindEvents() {
   // 音频播放结束后的处理
   bgmAudio.addEventListener('ended', playNextMemoryTrack);
   voiceAudio.addEventListener('ended', () => {
-    fadeAudio(bgmAudio, 1, 800);
+    if (currentScene === 'gallery') {
+      galleryVoicePlaying = false;
+      galleryVoiceBtn.textContent = '▶ 播放祝福';
+      galleryVoiceBtn.classList.remove('playing');
+    } else {
+      fadeAudio(bgmAudio, 1, 800);
+    }
   });
 }
 
 // 切换场景
 function switchScene(sceneName) {
-  [homeScene, cassetteScene, shellsScene, cakeScene, brokenCassetteScene, endingScene].forEach(s => s.classList.remove('active'));
+  if (sceneName !== currentScene) {
+    previousScene = currentScene;
+  }
 
-  const sceneMap = {
-    home: homeScene,
-    cassette: cassetteScene,
-    shells: shellsScene,
-    cake: cakeScene,
-    brokenCassette: brokenCassetteScene,
-    ending: endingScene
-  };
+  [homeScene, cassetteScene, shellsScene, cakeScene, brokenCassetteScene, endingScene, galleryScene].forEach(s => s.classList.remove('active'));
 
   if (sceneMap[sceneName]) {
     sceneMap[sceneName].classList.add('active');
@@ -340,10 +381,20 @@ function openShell(index) {
 
   // 播放祝福语音
   voiceAudio.volume = 1.0;
+  voiceAudio.onerror = () => {
+    // 若 .mp3 无法播放（实际是 M4A），回退到 .m4a
+    if (voiceAudio.src.includes('.mp3')) {
+      voiceAudio.src = shell.voice.replace('.mp3', '.m4a');
+      voiceAudio.play().catch(() => {});
+    }
+  };
   voiceAudio.src = shell.voice;
   voiceAudio.play().catch(() => {});
 
   renderWindowPhoto();
+  if (winTitle) {
+    winTitle.textContent = shell.name;
+  }
   winWindow.classList.add('open');
 }
 
@@ -362,7 +413,7 @@ function renderWindowPhoto() {
     video.autoplay = true;
     video.loop = true;
     video.muted = false;
-    video.volume = 0.4;
+    video.volume = 0.75;
     video.playsInline = true;
     winPhoto.appendChild(video);
   } else {
@@ -579,35 +630,47 @@ function checkIgnition() {
 
 // 点燃蜡烛
 function igniteCandle() {
+  // 防止重复触发
+  matchImg.style.pointerEvents = 'none';
+
+  // 先黑屏
+  screenOverlay.classList.add('active');
+
   // 火柴层淡出
   matchLayer.style.transition = 'opacity 0.8s ease';
   matchLayer.style.opacity = '0';
+
+  // 火柴就位后立刻停止背景音乐，海浪变小
+  bgmAudio.pause();
+  bgmAudio.currentTime = 0;
+  fadeAudio(wavesAudio, 0.15, 1000);
 
   setTimeout(() => {
     matchLayer.classList.remove('active');
     matchLayer.style.opacity = '';
     matchLayer.style.transition = '';
 
-    // 切换到蛋糕页，此时 screenOverlay 仍 active（全黑）
+    // 切换到蛋糕页，此时屏幕仍是黑色
     switchScene('cake');
 
-    // 播放点火音效
-    sfxAudio.src = 'assets/audio/sfx/ignite.mp3';
-    sfxAudio.play().catch(() => {});
-
-    // 2 秒后减小海浪，播放生日歌
+    // 黑屏 2s 后大声播放点火音效
     setTimeout(() => {
-      fadeAudio(wavesAudio, 0.1, 1500);
-      bgmAudio.pause();
-      bgmAudio.src = 'assets/audio/bgm/birthday_song.mp3';
-      bgmAudio.loop = true;
-      playAudio(bgmAudio, true, 0.7);
+      sfxAudio.src = 'assets/audio/sfx/ignite.MP3';
+      sfxAudio.volume = 1.0;
+      sfxAudio.play().catch(() => {});
+
+      // 再 4s 后播放生日歌并渐显画面
+      setTimeout(() => {
+        fadeAudio(wavesAudio, 0.05, 2000);
+        birthdayAudio.volume = 0.7;
+        birthdayAudio.play().catch(() => {});
+
+        // 生日歌响起后慢慢亮起
+        setTimeout(() => {
+          screenOverlay.classList.remove('active');
+        }, 500);
+      }, 4000);
     }, 2000);
-
-    // 屏幕慢慢变亮，露出蛋糕页和蒙版
-    setTimeout(() => {
-      screenOverlay.classList.remove('active');
-    }, 1500);
   }, 800);
 }
 
@@ -618,14 +681,13 @@ function startWish() {
 
   // 触发闭眼动画
   eyeMask.classList.add('active');
-  // 强制重绘
   void eyeMask.offsetWidth;
   eyeMask.classList.add('closed');
 
+  // 闭眼完成后在黑屏上停留 2s，再显示吹蜡烛按钮
   setTimeout(() => {
-    // 闭眼完成后显示吹蜡烛按钮（在黑屏上）
     blowBtn.classList.add('show');
-  }, 1500);
+  }, 3500);
 }
 
 function showWishHint() {
@@ -642,40 +704,118 @@ function showWishHint() {
 function blowCandle() {
   blowBtn.classList.remove('show');
 
-  // 移除闭眼蒙版，准备睁眼
+  // 立即播放吹蜡烛音效并切换到 cake_after
+  sfxAudio.src = 'assets/audio/sfx/blow.m4a';
+  sfxAudio.volume = 1.0;
+  sfxAudio.play().catch(() => {});
+
+  cakeImg.style.display = 'none';
+  cakeAfterImg.style.display = 'block';
+  birthdayText.style.display = 'none';
+  cakeMask.classList.add('fade-out');
+
+  // 睁眼：上下黑色蒙版分别向上/向下顺滑移开（闭眼动画的反向）
   eyeMask.classList.remove('closed');
-  eyeMask.classList.remove('active');
 
-  // 触发睁眼动画
-  eyeOpenMask.classList.add('active');
-  void eyeOpenMask.offsetWidth;
-  eyeOpenMask.classList.add('opening');
-
-  // 睁眼过程中切换到 cake_after
+  // 蒙版完全打开后进入蛋糕后流程
   setTimeout(() => {
-    cakeImg.style.display = 'none';
-    cakeAfterImg.style.display = 'block';
-    birthdayText.style.display = 'none';
-    cakeMask.classList.add('fade-out');
-  }, 600);
+    eyeMask.classList.remove('active');
+    startPostCakeScene();
+  }, 2600);
+}
 
-  // 睁眼完成后停顿 1 秒，然后变黑切换到坏掉的随身听场景
+// 蛋糕后流程：恢复海浪、播放 ditto、显示文字、2s 后自动播放 broken 转场
+function startPostCakeScene() {
+  // 生日歌渐弱，恢复海浪声音
+  fadeAudio(birthdayAudio, 0, 2000);
   setTimeout(() => {
-    eyeOpenMask.classList.remove('opening');
-    eyeOpenMask.classList.remove('active');
+    birthdayAudio.pause();
+    birthdayAudio.currentTime = 0;
+  }, 2000);
+  fadeAudio(wavesAudio, 0.4, 1500);
 
-    // 停顿 1 秒
-    setTimeout(() => {
-      screenOverlay.classList.add('active');
-      bgmAudio.pause();
+  setTimeout(() => {
+    // 播放 ditto，渐入
+    bgmAudio.src = 'assets/audio/bgm/ditto.MP3';
+    bgmAudio.loop = true;
+    bgmAudio.volume = 0;
+    bgmAudio.play().catch(() => {});
+    fadeAudio(bgmAudio, 0.6, 2000);
 
+    // 文字定位在 cake_after 下方
+    storyText.style.top = '86%';
+
+    // 第一次浮现："好了"
+    storyText.textContent = '好了';
+    storyText.classList.add('show');
+
+    let secondLineTimer = null;
+    const showSecondLine = () => {
+      if (secondLineTimer) {
+        clearTimeout(secondLineTimer);
+        secondLineTimer = null;
+      }
+      cakeScene.removeEventListener('click', showSecondLine);
+      storyText.removeEventListener('click', showSecondLine);
+      if (currentScene !== 'cake') return;
+      storyText.classList.remove('show');
       setTimeout(() => {
-        switchScene('brokenCassette');
-        startBrokenCassetteScene();
-        screenOverlay.classList.remove('active');
-      }, 1500);
-    }, 1000);
-  }, 1800);
+        storyText.textContent = '现在 海浪会把这些愿望带给大海。';
+        storyText.classList.add('show');
+
+        // 文字显示 4s 后消失，再过 2s 自动播放 broken
+        setTimeout(() => {
+          storyText.classList.remove('show');
+          setTimeout(() => {
+            onContinueToBroken();
+          }, 2000);
+        }, 4000);
+      }, 800);
+    };
+
+    cakeScene.addEventListener('click', showSecondLine, { once: true });
+    storyText.addEventListener('click', showSecondLine, { once: true });
+
+    // 2.5s 后自动显示第二行
+    secondLineTimer = setTimeout(showSecondLine, 2500);
+  }, 1500);
+}
+
+function onContinueToBroken() {
+  if (currentScene !== 'cake') return;
+
+  // 隐藏当前文字
+  storyText.style.transition = 'none';
+  storyText.classList.remove('show');
+  storyText.style.transition = '';
+
+  // 播放 broken.mp3
+  sfxAudio.src = 'assets/audio/sfx/broken.MP3';
+  sfxAudio.volume = 1.0;
+
+  const onBrokenEnded = () => {
+    sfxAudio.removeEventListener('ended', onBrokenEnded);
+    // broken 结束后以小音量播放海浪
+    fadeAudio(wavesAudio, 0.2, 1000);
+    if (wavesAudio.paused) {
+      wavesAudio.play().catch(() => {});
+    }
+    // 黑屏转场到坏掉的随身听场景
+    screenOverlay.classList.add('active');
+    setTimeout(() => {
+      switchScene('brokenCassette');
+      startBrokenCassetteScene();
+      screenOverlay.classList.remove('active');
+    }, 1500);
+  };
+  sfxAudio.addEventListener('ended', onBrokenEnded);
+  sfxAudio.play().catch(() => {});
+
+  // 1s 后停止 ditto
+  setTimeout(() => {
+    bgmAudio.pause();
+    bgmAudio.currentTime = 0;
+  }, 1000);
 }
 
 // 开始坏掉的随身听场景
@@ -686,8 +826,23 @@ function startBrokenCassetteScene() {
   brokenAfterLeft.style.opacity = '1';
   brokenAfterRight.style.opacity = '1';
 
-  // 不播放背景音乐
-  wavesAudio.pause();
+  // 海浪保持较小音量
+  wavesAudio.volume = 0.2;
+  if (wavesAudio.paused) {
+    wavesAudio.play().catch(() => {});
+  }
+
+  // 重置选项按钮状态：尝试修复正常，摘下耳机极小看不见
+  repairClickCount = 0;
+  repairBtn.style.transform = 'scale(1)';
+  repairBtn.style.opacity = '1';
+  repairBtn.style.display = '';
+  removeBtn.style.transform = 'scale(0)';
+  removeBtn.style.opacity = '0';
+  removeBtn.style.display = '';
+
+  // 文字居中显示
+  storyText.style.top = '50%';
 
   // 显示第一段文字
   currentStoryIndex = 0;
@@ -707,8 +862,12 @@ const storyTexts = [
 ];
 let currentStoryIndex = 0;
 let storyAutoTimer = null;
+let endingAutoTimer = null;
+let hintTimer = null;
 
 function advanceStoryText() {
+  if (currentScene !== 'brokenCassette') return;
+
   if (storyAutoTimer) {
     clearTimeout(storyAutoTimer);
     storyAutoTimer = null;
@@ -737,14 +896,12 @@ function advanceStoryText() {
 let repairClickCount = 0;
 function clickRepair() {
   repairClickCount++;
-  // 尝试修复按钮缩小，摘下耳机按钮变大
-  const repairScale = Math.max(0.6, 1 - repairClickCount * 0.15);
-  const removeScale = Math.min(1.4, 0.8 + repairClickCount * 0.15);
-  const repairOpacity = Math.max(0.4, 1 - repairClickCount * 0.15);
-  const removeOpacity = Math.min(1, 0.6 + repairClickCount * 0.15);
 
-  repairBtn.style.transform = `scale(${repairScale})`;
-  repairBtn.style.opacity = repairOpacity;
+  // 摘下耳机初始极小看不见，每次点击尝试修复都会慢慢无限制变大
+  const removeScale = repairClickCount * 0.25;
+  const removeOpacity = Math.min(1, repairClickCount * 0.08);
+
+  repairBtn.style.transform = 'scale(1)';
   removeBtn.style.transform = `scale(${removeScale})`;
   removeBtn.style.opacity = removeOpacity;
 }
@@ -763,8 +920,9 @@ function clickRemove() {
     brokenAfterRight.style.opacity = '0';
 
     setTimeout(() => {
-      // 切换到项链场景
+      // 切换到项链场景，同时调大海浪到正常音量
       screenOverlay.classList.add('active');
+      fadeAudio(wavesAudio, 0.4, 1500);
 
       setTimeout(() => {
         switchScene('ending');
@@ -783,20 +941,48 @@ const endingTexts = [
 ];
 
 function startEndingScene() {
-  endingNecklace.style.display = 'none';
+  endingBottle.style.display = 'none';
+  endingBottle.style.opacity = '';
+  giftGroup.style.display = 'none';
+  giftGroup.classList.remove('show');
+  endingNecklace.classList.remove('hint-glow');
+  endingLetter.style.display = '';
   endingMessage.style.display = 'none';
   returnBtn.style.display = 'none';
+
+  // 恢复海浪到正常音量
+  wavesAudio.volume = 0.4;
+
+  // 文字定位在项链下方
+  storyText.style.top = '78%';
 
   // 显示项链场景的文字提示
   storyText.textContent = endingTexts[0];
   storyText.classList.add('show');
   endingTextIndex = 0;
 
-  // 点击屏幕进入下一段或出现项链
+  // 点击屏幕或文字进入下一段
   endingScene.addEventListener('click', advanceEndingText, { once: true });
+  storyText.addEventListener('click', advanceEndingText, { once: true });
+
+  // 3s 后自动进入下一段
+  endingAutoTimer = setTimeout(() => {
+    advanceEndingText();
+  }, 3000);
 }
 
 function advanceEndingText() {
+  if (currentScene !== 'ending') return;
+
+  if (endingAutoTimer) {
+    clearTimeout(endingAutoTimer);
+    endingAutoTimer = null;
+  }
+
+  // 移除当前文字的所有监听，避免残留监听重复触发
+  endingScene.removeEventListener('click', advanceEndingText);
+  storyText.removeEventListener('click', advanceEndingText);
+
   storyText.classList.remove('show');
   endingTextIndex++;
 
@@ -805,21 +991,92 @@ function advanceEndingText() {
       storyText.textContent = endingTexts[endingTextIndex];
       storyText.classList.add('show');
       endingScene.addEventListener('click', advanceEndingText, { once: true });
-    }, 500);
+      storyText.addEventListener('click', advanceEndingText, { once: true });
+      endingAutoTimer = setTimeout(() => {
+        advanceEndingText();
+      }, 4000);
+    }, 800);
   } else {
-    // 出现项链
+    // 第二段文字结束后显示漂流瓶
     setTimeout(() => {
       storyText.classList.remove('show');
-      endingNecklace.style.display = 'block';
-      endingNecklace.style.opacity = '0';
-      void endingNecklace.offsetWidth;
-      endingNecklace.style.transition = 'opacity 1s ease';
-      endingNecklace.style.opacity = '1';
-
-      // 点击项链显示最终文字和 return 按钮
-      endingNecklace.addEventListener('click', showEndingMessage, { once: true });
-    }, 500);
+      setTimeout(() => {
+        showBottle();
+      }, 500);
+    }, 800);
   }
+}
+
+function showBottle() {
+  if (currentScene !== 'ending') return;
+
+  endingBottle.style.display = 'block';
+  endingBottle.style.opacity = '0';
+  void endingBottle.offsetWidth;
+  endingBottle.style.transition = 'opacity 1s ease';
+  endingBottle.style.opacity = '1';
+
+  endingBottle.addEventListener('click', showGifts, { once: true });
+}
+
+function showGifts() {
+  if (currentScene !== 'ending') return;
+
+  endingBottle.style.display = 'none';
+  meowBtn.classList.remove('show');
+  giftGroup.style.display = 'flex';
+  void giftGroup.offsetWidth;
+  giftGroup.classList.add('show');
+
+  // 6s 后若未点击项链，添加发光提示
+  hintTimer = setTimeout(() => {
+    endingNecklace.classList.add('hint-glow');
+  }, 6000);
+
+  endingNecklace.addEventListener('click', enterGalleryScene, { once: true });
+  endingLetter.addEventListener('click', openLetterZoom);
+
+  // 显示 CLOSE 按钮
+  returnBtn.style.display = 'block';
+  void returnBtn.offsetWidth;
+  returnBtn.classList.add('show');
+}
+
+function openLetterZoom() {
+  letterOverlay.classList.add('show');
+}
+
+function closeLetterZoom() {
+  letterOverlay.classList.remove('show');
+}
+
+function closeGiftView() {
+  if (currentScene !== 'ending') return;
+
+  if (hintTimer) {
+    clearTimeout(hintTimer);
+    hintTimer = null;
+  }
+  endingNecklace.classList.remove('hint-glow');
+
+  // 收起礼物，显示 bottle 和 Meow 按钮
+  giftGroup.style.display = 'none';
+  giftGroup.classList.remove('show');
+  returnBtn.classList.remove('show');
+  returnBtn.style.display = 'none';
+
+  endingBottle.style.display = 'block';
+  endingBottle.style.opacity = '0';
+  void endingBottle.offsetWidth;
+  endingBottle.style.transition = 'opacity 1s ease';
+  endingBottle.style.opacity = '1';
+
+  meowBtn.style.display = 'block';
+  void meowBtn.offsetWidth;
+  meowBtn.classList.add('show');
+
+  // 重新给 bottle 绑定点击事件，可再次打开礼物
+  endingBottle.addEventListener('click', showGifts, { once: true });
 }
 
 // 蛋糕页鼠标追踪
@@ -834,16 +1091,6 @@ function trackCakeMouse(e) {
 
 function resetCakeMouse() {
   cakeImg.style.transform = 'translate(0, 0)';
-}
-
-// 显示 ending 祝福文字
-function showEndingMessage() {
-  endingMessage.style.display = 'flex';
-  void endingMessage.offsetWidth;
-  endingMessage.classList.add('show');
-  returnBtn.style.display = 'block';
-  void returnBtn.offsetWidth;
-  returnBtn.classList.add('show');
 }
 
 // 返回首页
@@ -868,6 +1115,24 @@ function returnToHome() {
   wishHint.classList.remove('show');
   blowBtn.classList.remove('show');
   birthdayText.style.display = 'block';
+  birthdayAudio.pause();
+  birthdayAudio.currentTime = 0;
+  bgmAudio.pause();
+  bgmAudio.currentTime = 0;
+  sfxAudio.pause();
+  sfxAudio.currentTime = 0;
+  voiceAudio.pause();
+  voiceAudio.currentTime = 0;
+  closeGalleryDetail();
+
+  // 移除可能残留的点击监听
+  cakeScene.removeEventListener('click', onContinueToBroken);
+  storyText.removeEventListener('click', onContinueToBroken);
+  endingScene.removeEventListener('click', advanceEndingText);
+  storyText.removeEventListener('click', advanceEndingText);
+
+  // 重置火柴层
+  matchImg.style.pointerEvents = 'auto';
 
   // 重置眼动画
   eyeMask.classList.remove('active', 'closed');
@@ -881,12 +1146,15 @@ function returnToHome() {
   brokenAfterLeft.style.transition = '';
   brokenAfterRight.style.transition = '';
   storyText.classList.remove('show');
+  storyText.style.top = '';
   choiceButtons.style.display = 'none';
   choiceButtons.style.opacity = '0';
   repairBtn.style.transform = '';
   repairBtn.style.opacity = '';
-  removeBtn.style.transform = '';
-  removeBtn.style.opacity = '';
+  repairBtn.style.display = '';
+  removeBtn.style.transform = 'scale(0)';
+  removeBtn.style.opacity = '0';
+  removeBtn.style.display = '';
   repairClickCount = 0;
   currentStoryIndex = 0;
   endingTextIndex = 0;
@@ -894,17 +1162,197 @@ function returnToHome() {
     clearTimeout(storyAutoTimer);
     storyAutoTimer = null;
   }
+  if (endingAutoTimer) {
+    clearTimeout(endingAutoTimer);
+    endingAutoTimer = null;
+  }
+  if (hintTimer) {
+    clearTimeout(hintTimer);
+    hintTimer = null;
+  }
 
   // 重置 ending 页
+  endingBottle.style.display = 'none';
+  endingBottle.style.opacity = '';
+  giftGroup.style.display = 'none';
+  giftGroup.classList.remove('show');
+  endingNecklace.classList.remove('hint-glow');
   endingNecklace.style.display = 'block';
   endingNecklace.style.opacity = '';
   endingNecklace.style.transition = '';
+  endingLetter.style.display = '';
   endingMessage.style.display = 'none';
   endingMessage.classList.remove('show');
   returnBtn.style.display = 'none';
   returnBtn.classList.remove('show');
+  meowBtn.style.display = 'none';
+  meowBtn.classList.remove('show');
 
   switchScene('home');
+}
+
+// 进入祝福总库
+function enterGalleryScene() {
+  if (hintTimer) {
+    clearTimeout(hintTimer);
+    hintTimer = null;
+  }
+  endingNecklace.classList.remove('hint-glow');
+  switchScene('gallery');
+  renderGallery();
+}
+
+// 从画廊返回上一页
+function backFromGallery() {
+  const target = previousScene || 'home';
+  switchScene(target);
+}
+
+// 打开/关闭全局菜单
+function openMenu() {
+  globalMenu.classList.add('show');
+}
+
+function closeMenu() {
+  globalMenu.classList.remove('show');
+}
+
+function clickMenuItem(sceneName) {
+  closeMenu();
+  closeGalleryDetail();
+  closeWindow();
+  if (sceneName === 'gallery') {
+    enterGalleryScene();
+  } else if (sceneMap[sceneName]) {
+    switchScene(sceneName);
+  }
+}
+
+// 渲染祝福总库网格
+function renderGallery() {
+  galleryGrid.innerHTML = '';
+  shellsData.forEach((shell, index) => {
+    const card = document.createElement('div');
+    card.className = 'gallery-card';
+    card.innerHTML = `
+      <img src="${shell.shellImage}" alt="" class="gallery-card-shell">
+      <span class="gallery-card-name">${shell.name}</span>
+      <span class="gallery-card-index">NO.${shell.id}</span>
+    `;
+    card.addEventListener('click', () => openGalleryDetail(index));
+    galleryGrid.appendChild(card);
+  });
+}
+
+// 打开画廊详情
+function openGalleryDetail(index) {
+  galleryShellIndex = index;
+  galleryPhotoIndex = 0;
+  galleryVoicePlaying = false;
+  galleryVoiceBtn.textContent = '▶ 播放祝福';
+  galleryVoiceBtn.classList.remove('playing');
+  galleryDetail.classList.add('show');
+  updateGalleryDetail();
+}
+
+// 关闭画廊详情
+function closeGalleryDetail() {
+  galleryDetail.classList.remove('show');
+  voiceAudio.pause();
+  voiceAudio.currentTime = 0;
+  galleryVoicePlaying = false;
+  galleryVoiceBtn.textContent = '▶ 播放祝福';
+  galleryVoiceBtn.classList.remove('playing');
+}
+
+// 画廊详情翻页
+function changeGalleryPhoto(dir) {
+  const shell = shellsData[galleryShellIndex];
+  const newIndex = galleryPhotoIndex + dir;
+  if (newIndex >= 0 && newIndex < shell.media.length) {
+    galleryPhotoIndex = newIndex;
+    updateGalleryDetail();
+  }
+}
+
+// 更新画廊详情内容
+function updateGalleryDetail() {
+  const shell = shellsData[galleryShellIndex];
+  const src = shell.media[galleryPhotoIndex];
+  const isVideo = /\.(mp4|webm|mov)$/i.test(src);
+
+  galleryDetailShell.textContent = `SHELL ${shell.id}`;
+  galleryDetailName.textContent = shell.name;
+  galleryDetailCaption.textContent = `${galleryPhotoIndex + 1} / ${shell.media.length}`;
+
+  galleryDetailMedia.innerHTML = '';
+  if (isVideo) {
+    const video = document.createElement('video');
+    video.src = src;
+    video.autoplay = true;
+    video.loop = true;
+    video.muted = false;
+    video.volume = 0.75;
+    video.playsInline = true;
+    video.controls = true;
+    galleryDetailMedia.appendChild(video);
+  } else {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = '';
+    img.onerror = () => { img.src = 'assets/images/placeholder.svg'; };
+    galleryDetailMedia.appendChild(img);
+  }
+
+  galleryDetailPrev.disabled = galleryPhotoIndex === 0;
+  galleryDetailNext.disabled = galleryPhotoIndex === shell.media.length - 1;
+
+  loadGalleryDetailText();
+}
+
+// 加载画廊详情文字
+function loadGalleryDetailText() {
+  const shell = shellsData[galleryShellIndex];
+  const num = String(shell.id).padStart(2, '0');
+  const idx = String(galleryPhotoIndex + 1).padStart(2, '0');
+  const textPath = `assets/texts/txt_${num}_${idx}.txt`;
+  const defaultText = shell.texts[galleryPhotoIndex] || '';
+
+  galleryDetailText.textContent = defaultText.trim();
+  fetch(textPath)
+    .then(res => res.ok ? res.text() : '')
+    .then(text => {
+      if (text.trim()) {
+        galleryDetailText.textContent = text.trim();
+      }
+    })
+    .catch(() => {});
+}
+
+// 播放/暂停画廊祝福语音
+function toggleGalleryVoice() {
+  if (galleryShellIndex === null) return;
+
+  if (galleryVoicePlaying) {
+    voiceAudio.pause();
+    galleryVoicePlaying = false;
+    galleryVoiceBtn.textContent = '▶ 播放祝福';
+    galleryVoiceBtn.classList.remove('playing');
+  } else {
+    const shell = shellsData[galleryShellIndex];
+    voiceAudio.volume = 1.0;
+    voiceAudio.onerror = () => {
+      if (voiceAudio.src.includes('.mp3')) {
+        voiceAudio.src = shell.voice.replace('.mp3', '.m4a');
+        voiceAudio.play().catch(() => {});
+      }
+    };
+    voiceAudio.src = shell.voice;
+    voiceAudio.play().catch(() => {});
+    galleryVoicePlaying = true;
+    galleryVoiceBtn.textContent = '⏸ 暂停祝福';
+    galleryVoiceBtn.classList.add('playing');
+  }
 }
 
 // 通用音频播放

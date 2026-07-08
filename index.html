@@ -15,15 +15,35 @@
   <audio id="bgmAudio" preload="auto"></audio>
   <audio id="voiceAudio" preload="auto"></audio>
   <audio id="sfxAudio" preload="auto"></audio>
+  <audio id="birthdayAudio" src="assets/audio/bgm/birthday_song.MP3" loop preload="auto"></audio>
 
   <!-- 全局遮罩：用于变黑/变亮过渡 -->
   <div class="screen-overlay" id="screenOverlay"></div>
+
+  <!-- 全局导航菜单 -->
+  <nav class="global-menu" id="globalMenu">
+    <button class="menu-close" id="menuClose" aria-label="关闭菜单">✕</button>
+    <div class="menu-items">
+      <button class="menu-item" data-scene="home">HOME</button>
+      <button class="menu-item" data-scene="cassette">CASSETTE</button>
+      <button class="menu-item" data-scene="shells">SHELLS</button>
+      <button class="menu-item" data-scene="cake">CAKE</button>
+      <button class="menu-item" data-scene="brokenCassette">BROKEN</button>
+      <button class="menu-item" data-scene="ending">ENDING</button>
+      <button class="menu-item" data-scene="gallery">GALLERY</button>
+    </div>
+  </nav>
 
   <!-- 场景容器 -->
   <div class="stage" id="stage">
 
     <!-- 首页 -->
     <section class="scene active" id="homeScene" style="background-image: url('assets/images/backgrounds/beach_home.jpg');">
+      <button class="menu-toggle" id="menuToggle" aria-label="菜单">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
       <button class="enter-btn" id="enterBtn">ENTER</button>
     </section>
 
@@ -66,19 +86,32 @@
         </div>
         <button class="wish-btn" id="wishBtn">许愿 Make a Wish</button>
         <p class="wish-hint" id="wishHint" style="display: none;">许愿 Make a Wish</p>
-        <button class="blow-btn" id="blowBtn">吹蜡烛</button>
       </div>
+    </section>
+
+    <!-- 祝福总库页 -->
+    <section class="scene" id="galleryScene" style="background-image: url('assets/images/backgrounds/beach_home.jpg');">
+      <div class="gallery-header">
+        <button class="gallery-back" id="galleryBack">← BACK</button>
+        <h1 class="gallery-title">GALLERY</h1>
+      </div>
+      <div class="gallery-grid" id="galleryGrid"></div>
     </section>
 
     <!-- 结尾项链页 -->
     <section class="scene" id="endingScene" style="background-image: url('assets/images/backgrounds/beach_home.jpg');">
       <div class="ending-area" id="endingArea">
-        <img src="assets/images/icons/necklace.png" alt="贝壳项链" class="necklace-img" id="endingNecklace">
+        <img src="assets/images/icons/bottle.png" alt="漂流瓶" class="bottle-img" id="endingBottle" style="display: none;">
+        <div class="gift-group" id="giftGroup" style="display: none;">
+          <img src="assets/images/icons/necklace.png" alt="贝壳项链" class="necklace-img" id="endingNecklace">
+          <img src="assets/images/icons/letter.png" alt="信" class="letter-img" id="endingLetter">
+        </div>
         <div class="ending-message" id="endingMessage">
           <p class="ending-line">祝你18岁生日快乐</p>
           <p class="ending-line">祝你可以勇敢的走向未来</p>
         </div>
-        <button class="return-btn" id="returnBtn">RETURN</button>
+        <button class="return-btn" id="returnBtn">CLOSE</button>
+        <button class="meow-btn" id="meowBtn" style="display: none;">Meow > - <</button>
       </div>
     </section>
 
@@ -114,19 +147,43 @@
     <div class="eye-bottom"></div>
   </div>
   <div class="eye-open-mask" id="eyeOpenMask"></div>
+  <button class="blow-btn" id="blowBtn">吹蜡烛</button>
 
   <!-- 坏掉的随身听场景 -->
   <section class="scene" id="brokenCassetteScene">
     <div class="broken-cassette-area" id="brokenCassetteArea">
       <img src="assets/images/icons/cassette_after_1.png" alt="磁带左" class="cassette-after-img cassette-after-left" id="brokenAfterLeft" style="display: none;">
       <img src="assets/images/icons/cassette_after_2.png" alt="磁带右" class="cassette-after-img cassette-after-right" id="brokenAfterRight" style="display: none;">
-      <p class="story-text" id="storyText"></p>
       <div class="choice-buttons" id="choiceButtons" style="display: none;">
         <button class="choice-btn repair-btn" id="repairBtn">尝试修复</button>
         <button class="choice-btn remove-btn" id="removeBtn">摘下耳机</button>
       </div>
     </div>
   </section>
+
+  <p class="story-text" id="storyText"></p>
+
+  <!-- 信纸放大查看层 -->
+  <div class="letter-overlay" id="letterOverlay">
+    <img src="assets/images/icons/letter.png" alt="信" class="letter-zoom">
+  </div>
+
+  <!-- 画廊详情弹窗 -->
+  <div class="gallery-detail" id="galleryDetail">
+    <button class="gallery-detail-close" id="galleryDetailClose">✕</button>
+    <div class="gallery-detail-header">
+      <span class="gallery-detail-shell" id="galleryDetailShell"></span>
+      <h2 class="gallery-detail-name" id="galleryDetailName"></h2>
+      <button class="gallery-voice-btn" id="galleryVoiceBtn">▶ 播放祝福</button>
+    </div>
+    <div class="gallery-detail-body">
+      <button class="gallery-detail-nav prev" id="galleryDetailPrev">◀</button>
+      <div class="gallery-detail-media" id="galleryDetailMedia"></div>
+      <button class="gallery-detail-nav next" id="galleryDetailNext">▶</button>
+    </div>
+    <div class="gallery-detail-text" id="galleryDetailText"></div>
+    <div class="gallery-detail-caption" id="galleryDetailCaption"></div>
+  </div>
 
   <script src="script.js"></script>
 </body>
