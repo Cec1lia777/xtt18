@@ -245,6 +245,25 @@ function bindEvents() {
       fadeAudio(bgmAudio, 1, 800);
     }
   });
+
+  // 音频解锁：第一次用户交互时解除浏览器自动播放限制
+  document.addEventListener('click', unlockAudio, { once: true });
+  document.addEventListener('touchstart', unlockAudio, { once: true });
+}
+
+// 音频解锁：第一次用户交互时尝试播放并暂停所有 audio，解除浏览器自动播放限制
+function unlockAudio() {
+  [wavesAudio, bgmAudio, voiceAudio, sfxAudio, birthdayAudio].forEach(audio => {
+    if (!audio || !audio.paused) return;
+    const wasMuted = audio.muted;
+    audio.muted = true;
+    audio.play().then(() => {
+      audio.pause();
+      audio.currentTime = 0;
+    }).catch(() => {}).finally(() => {
+      audio.muted = wasMuted;
+    });
+  });
 }
 
 // 切换场景
