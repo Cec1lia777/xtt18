@@ -19,22 +19,24 @@ const shellMediaFiles = [
   ['photo_10_01.JPG', 'photo_10_02.JPG', 'photo_10_03.JPG'],   // 贝壳 10
   ['photo_11_01.JPG', 'photo_11_02.jpg', 'photo_11_03.jpg', 'photo_11_04.jpg', 'photo_11_05.JPG', 'photo_11_06.JPG', 'photo_11_07.JPG', 'photo_11_08.JPG'],   // 贝壳 11
   ['photo_12_01.JPG', 'photo_12_02.JPG', 'photo_12_03.MP4'],   // 贝壳 12
-  ['photo_13_01.JPG', 'photo_13_02.JPG', 'photo_13_03.JPG', 'photo_13_04.JPG', 'photo_13_05.JPG', 'photo_13_06.JPG', 'photo_13_07.JPG', 'photo_13_08.JPG'],   // 贝壳 13
+  ['photo_13_01.JPG', 'photo_13_02.JPG', 'photo_13_03.JPG', 'photo_13_04.JPG', 'photo_13_05.JPG', 'photo_13_06.JPG', 'photo_13_07.JPG', 'photo_13_08.JPG', 'photo_13_09.jpg'],   // 贝壳 13
   ['photo_14_01.jpg', 'photo_14_02.jpg', 'photo_14_03.jpg', 'photo_14_04.jpg', 'photo_14_05.jpg', 'photo_14_06.jpg', 'photo_14_07.jpg', 'photo_14_08.jpg', 'photo_14_09.mp4', 'photo_14_10.mp4', 'photo_14_11.mp4'],   // 贝壳 14
   ['photo_15_01.jpg', 'photo_15_02.jpg', 'photo_15_03.jpg', 'photo_15_04.jpg', 'photo_15_05.mp4', 'photo_15_06.mp4', 'photo_15_07.jpg', 'photo_15_08.jpg', 'photo_15_09.jpg', 'photo_15_10.jpg', 'photo_15_11.jpg', 'photo_15_12.jpg', 'photo_15_13.jpg', 'photo_15_14.jpg', 'photo_15_15.jpg', 'photo_15_16.jpg', 'photo_15_17.jpg', 'photo_15_18.jpg', 'photo_15_19.mp4', 'photo_15_20.mp4'],   // 贝壳 15
   ['photo_16_01.jpg', 'photo_16_02.jpg', 'photo_16_03.jpg', 'photo_16_04.jpg'],   // 贝壳 16
-  ['photo_17_01.jpg'],   // 贝壳 17
-  ['photo_18_01.jpg', 'photo_18_02.jpg', 'photo_18_03.jpg', 'photo_18_04.jpg', 'photo_18_05.jpg', 'photo_18_06.jpg', 'photo_18_07.jpg', 'photo_18_08.jpg', 'photo_18_09.jpg', 'photo_18_10.jpg', 'photo_18_11.jpg', 'photo_18_12.jpg', 'photo_18_13.jpg', 'photo_18_14.jpg', 'photo_18_15.mp4', 'photo_18_16.mp4', 'photo_18_17.mp4', 'photo_18_18.mp4', 'photo_18_19.mp4', 'photo_18_20.MP4'],   // 贝壳 18
+  ['photo_17_01.jpg', 'photo_17_02.jpg'],   // 贝壳 17
+  ['photo_18_01.jpg', 'photo_18_02.jpg', 'photo_18_03.jpg', 'photo_18_04.jpg', 'photo_18_05.jpg', 'photo_18_06.jpg', 'photo_18_07.jpg', 'photo_18_08.jpg', 'photo_18_09.jpg', 'photo_18_10.jpg', 'photo_18_11.jpg', 'photo_18_12.jpg', 'photo_18_13.jpg', 'photo_18_14.jpg', 'photo_18_15.mp4', 'photo_18_16.mp4', 'photo_18_17.mp4', 'photo_18_18.mp4', 'photo_18_19.mp4', 'photo_18_20.MP4', 'photo_18_21.jpg'],   // 贝壳 18
   ['photo_19_01.jpg', 'photo_19_02.jpg', 'photo_19_03.jpg', 'photo_19_04.jpg', 'photo_19_05.jpg', 'photo_19_06.jpg'],   // 贝壳 19
   ['photo_20_01.jpg', 'photo_20_02.jpg', 'photo_20_03.jpg', 'photo_20_04.jpg', 'photo_20_05.jpg', 'photo_20_06.jpg', 'photo_20_07.jpg', 'photo_20_08.jpg', 'photo_20_09.jpg', 'photo_20_10.jpg'],   // 贝壳 20
+  ['photo_21_01.jpg', 'photo_21_02.mp4', 'photo_21_03.mp4', 'photo_21_04.jpg', 'photo_21_05.jpg', 'photo_21_06.jpg'],   // 贝壳 21
 ];
 
-// 每个贝壳对应的人名（按顺序 1-20）
+// 每个贝壳对应的人名（按顺序 1-21）
 const shellNames = [
   'czy', 'eason', 'fyc', 'lj', 'luke',
   'ly', 'rjr', 'ss', 'szj', 'tlr',
   'wrx', 'xjz', 'zyx', 'zyz', 'wsa',
-  'CLY', 'lcy', 'wzy', 'yjx', 'ydd'
+  'CLY', 'lcy', 'wzy', 'yjx', 'ydd',
+  'shell21'
 ];
 
 // 自动生成贝壳数据
