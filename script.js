@@ -364,7 +364,7 @@ function setupShells() {
   const stageHeight = shellsBgImg.clientHeight || window.innerWidth * (BG_IMAGE_HEIGHT / BG_IMAGE_WIDTH);
   scrollStage.style.minHeight = `${stageHeight}px`;
 
-  const rows = 10;
+  const rows = 11;
   const cols = 2;
   const positions = [];
   const bottomMargin = 120;
