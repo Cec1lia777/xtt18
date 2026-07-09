@@ -63,6 +63,14 @@ const videoVolumes = {
   'photo_09_01': 0.25,  // 贝壳 9 视频 quieter
 };
 
+// 需要增益的祝福语音（shell id -> gain multiplier）
+const voiceGains = {
+  16: 2.0,  // cly 的声音放大 2 倍
+};
+
+let voiceAudioCtx = null;
+let voiceGainNode = null;
+
 // DOM 元素
 const wavesAudio = document.getElementById('wavesAudio');
 const bgmAudio = document.getElementById('bgmAudio');
@@ -403,6 +411,27 @@ function showShellsHint() {
   }, 3000);
 }
 
+// 初始化祝福语音的 Web Audio 增益节点
+function setupVoiceGain(gainValue = 1.0) {
+  if (voiceAudioCtx) {
+    if (voiceGainNode) voiceGainNode.gain.value = gainValue;
+    return;
+  }
+  const AudioContext = window.AudioContext || window.webkitAudioContext;
+  if (!AudioContext) return;
+  try {
+    voiceAudioCtx = new AudioContext();
+    const source = voiceAudioCtx.createMediaElementSource(voiceAudio);
+    voiceGainNode = voiceAudioCtx.createGain();
+    source.connect(voiceGainNode);
+    voiceGainNode.connect(voiceAudioCtx.destination);
+    voiceGainNode.gain.value = gainValue;
+  } catch (e) {
+    voiceAudioCtx = null;
+    voiceGainNode = null;
+  }
+}
+
 // 打开贝壳弹窗
 function openShell(index) {
   currentShellIndex = index;
@@ -413,6 +442,8 @@ function openShell(index) {
   fadeAudio(bgmAudio, 0.08, 200);
 
   // 播放祝福语音
+  const gain = voiceGains[shell.id] || 1.0;
+  setupVoiceGain(gain);
   voiceAudio.volume = 1.0;
   voiceAudio.onerror = () => {
     // 若 .mp3 无法播放（实际是 M4A），回退到 .m4a
@@ -533,6 +564,14 @@ function closeWindow() {
   // 停止祝福语音
   voiceAudio.pause();
   voiceAudio.currentTime = 0;
+
+  // 停止并清空弹窗中的视频，防止关闭窗口后音频继续播放
+  const video = winPhoto.querySelector('video');
+  if (video) {
+    video.pause();
+    video.src = '';
+    video.load();
+  }
 
   // 背景音乐恢复
   fadeAudio(bgmAudio, bgmVolume, 800);
@@ -1362,6 +1401,14 @@ function closeGalleryDetail() {
   galleryVoicePlaying = false;
   galleryVoiceBtn.textContent = '▶ 播放祝福';
   galleryVoiceBtn.classList.remove('playing');
+
+  // 停止画廊详情中的视频
+  const video = galleryDetailMedia.querySelector('video');
+  if (video) {
+    video.pause();
+    video.src = '';
+    video.load();
+  }
 }
 
 // 画廊详情翻页
