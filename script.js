@@ -197,8 +197,8 @@ let galleryVoicePlaying = false;
 // 初始化
 function init() {
   bindEvents();
-  setShellsBackground();
-  if (shellsBgImg.complete) {
+  const srcChanged = setShellsBackground();
+  if (!srcChanged && shellsBgImg.complete) {
     setupShells();
   } else {
     shellsBgImg.addEventListener('load', setupShells, { once: true });
@@ -206,8 +206,8 @@ function init() {
 
   // 横竖屏切换时更换贝壳背景图并重新布局
   window.matchMedia('(orientation: portrait)').addEventListener('change', () => {
-    setShellsBackground();
-    if (shellsBgImg.complete) {
+    const changed = setShellsBackground();
+    if (!changed && shellsBgImg.complete) {
       setupShells();
     } else {
       shellsBgImg.addEventListener('load', setupShells, { once: true });
@@ -215,7 +215,7 @@ function init() {
   });
 }
 
-// 根据横竖屏选择贝壳背景图
+// 根据横竖屏选择贝壳背景图，返回是否切换了 src
 function setShellsBackground() {
   const isPortrait = window.matchMedia('(orientation: portrait)').matches;
   const newSrc = isPortrait
@@ -223,7 +223,9 @@ function setShellsBackground() {
     : 'assets/images/backgrounds/beach_shells.jpg';
   if (!shellsBgImg.src.includes(newSrc)) {
     shellsBgImg.src = newSrc;
+    return true;
   }
+  return false;
 }
 
 // 绑定事件
@@ -383,57 +385,59 @@ function playNextMemoryTrack() {
 function setupShells() {
   shellsContainer.innerHTML = '';
 
-  // 根据背景图实际显示高度计算
-  let stageHeight = shellsBgImg.clientHeight;
-  if (!stageHeight) {
-    const naturalWidth = shellsBgImg.naturalWidth || BG_IMAGE_WIDTH;
-    const naturalHeight = shellsBgImg.naturalHeight || BG_IMAGE_HEIGHT;
-    stageHeight = window.innerWidth * (naturalHeight / naturalWidth);
-  }
-  scrollStage.style.minHeight = `${stageHeight}px`;
-
-  const rows = 11;
-  const cols = 2;
-  const positions = [];
-  const bottomMargin = stageHeight * BG_BOTTOM_MARGIN_RATIO;
-  const usableTop = stageHeight * BG_TOP_MARGIN_RATIO;
-  const usableHeight = Math.max(stageHeight - usableTop - bottomMargin, 100);
-
-  for (let r = 0; r < rows; r++) {
-    for (let c = 0; c < cols; c++) {
-      const topPx = usableTop + (r / rows) * usableHeight + Math.random() * (usableHeight / rows * 0.5);
-      const colLeft = c === 0 ? 5 + Math.random() * 38 : 55 + Math.random() * 38;
-      positions.push({ top: topPx, left: colLeft });
+  // 等浏览器完成布局后再计算背景图实际渲染高度
+  requestAnimationFrame(() => {
+    let stageHeight = shellsBgImg.getBoundingClientRect().height;
+    if (!stageHeight) {
+      const naturalWidth = shellsBgImg.naturalWidth || BG_IMAGE_WIDTH;
+      const naturalHeight = shellsBgImg.naturalHeight || BG_IMAGE_HEIGHT;
+      stageHeight = window.innerWidth * (naturalHeight / naturalWidth);
     }
-  }
+    scrollStage.style.minHeight = `${stageHeight}px`;
 
-  // 打乱顺序
-  for (let i = positions.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [positions[i], positions[j]] = [positions[j], positions[i]];
-  }
+    const rows = 11;
+    const cols = 2;
+    const positions = [];
+    const bottomMargin = stageHeight * BG_BOTTOM_MARGIN_RATIO;
+    const usableTop = stageHeight * BG_TOP_MARGIN_RATIO;
+    const usableHeight = Math.max(stageHeight - usableTop - bottomMargin, 100);
 
-  shellsData.forEach((shell, index) => {
-    const el = document.createElement('img');
-    el.src = shell.shellImage;
-    el.className = 'shell-item';
-    el.alt = '';
-    el.dataset.index = index;
+    for (let r = 0; r < rows; r++) {
+      for (let c = 0; c < cols; c++) {
+        const topPx = usableTop + (r / rows) * usableHeight + Math.random() * (usableHeight / rows * 0.5);
+        const colLeft = c === 0 ? 5 + Math.random() * 38 : 55 + Math.random() * 38;
+        positions.push({ top: topPx, left: colLeft });
+      }
+    }
 
-    const pos = positions[index];
-    el.style.top = `${pos.top}px`;
-    el.style.left = `${pos.left}%`;
+    // 打乱顺序
+    for (let i = positions.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [positions[i], positions[j]] = [positions[j], positions[i]];
+    }
 
-    const scale = 1.5 + Math.random() * 0.5;
-    const rotate = -25 + Math.random() * 50;
-    el.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
+    shellsData.forEach((shell, index) => {
+      const el = document.createElement('img');
+      el.src = shell.shellImage;
+      el.className = 'shell-item';
+      el.alt = '';
+      el.dataset.index = index;
 
-    el.addEventListener('click', (e) => {
-      e.stopPropagation();
-      openShell(index);
+      const pos = positions[index];
+      el.style.top = `${pos.top}px`;
+      el.style.left = `${pos.left}%`;
+
+      const scale = 1.5 + Math.random() * 0.5;
+      const rotate = -25 + Math.random() * 50;
+      el.style.transform = `scale(${scale}) rotate(${rotate}deg)`;
+
+      el.addEventListener('click', (e) => {
+        e.stopPropagation();
+        openShell(index);
+      });
+
+      shellsContainer.appendChild(el);
     });
-
-    shellsContainer.appendChild(el);
   });
 }
 
