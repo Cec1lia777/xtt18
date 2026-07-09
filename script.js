@@ -152,6 +152,7 @@ const removeBtn = document.getElementById('removeBtn');
 const cakeImg = document.getElementById('cakeImg');
 const cakeAfterImg = document.getElementById('cakeAfterImg');
 const cakeMask = document.getElementById('cakeMask');
+const cakeHint = document.getElementById('cakeHint');
 const wishBtn = document.getElementById('wishBtn');
 const wishHint = document.getElementById('wishHint');
 const blowBtn = document.getElementById('blowBtn');
@@ -828,6 +829,9 @@ function startWish() {
   wishBtn.style.opacity = '0';
   wishBtn.style.pointerEvents = 'none';
 
+  // 隐藏顶部彩蛋提示
+  if (cakeHint) cakeHint.style.opacity = '0';
+
   // 触发闭眼动画
   eyeMask.classList.add('active');
   void eyeMask.offsetWidth;
@@ -1297,6 +1301,7 @@ function returnToHome() {
   cakeImg.style.display = 'block';
   cakeAfterImg.style.display = 'none';
   cakeMask.classList.remove('fade-out');
+  if (cakeHint) cakeHint.style.opacity = '';
   wishBtn.style.opacity = '1';
   wishBtn.style.pointerEvents = 'auto';
   wishHint.style.display = 'none';

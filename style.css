@@ -532,6 +532,13 @@ body::before {
 
 .gift-group.show {
   display: flex;
+  animation: giftGroupAppear 0.8s ease-out forwards;
+}
+
+@keyframes giftGroupAppear {
+  0% { opacity: 0; transform: scale(0.35); }
+  70% { transform: scale(1.03); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
 .letter-img {
@@ -1093,6 +1100,21 @@ body::before {
   height: 100%;
 }
 
+.cake-hint {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--white);
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  opacity: 0.55;
+  text-align: center;
+  pointer-events: none;
+  z-index: 5;
+  text-shadow: 0 0 6px rgba(255,255,255,0.3);
+}
+
 .cake-img {
   width: 70vh;
   height: 70vh;
@@ -1354,34 +1376,14 @@ body::before {
   background: transparent;
   color: var(--white);
   border: 2px solid var(--white);
-  transition: all 0.3s ease;
+  transition: background 0.2s, color 0.2s, opacity 0.2s;
   cursor: pointer;
-  overflow: hidden;
 }
 
-.choice-btn::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
-  transform: translateX(-100%);
-  transition: transform 0.5s ease;
-}
-
-.choice-btn:hover {
-  background: rgba(255,255,255,0.12);
-  box-shadow: 0 0 20px rgba(255,255,255,0.4);
-  transform: translateY(-2px) scale(1.02);
-  letter-spacing: 0.04em;
-}
-
-.choice-btn:hover::before {
-  transform: translateX(100%);
-}
-
+.choice-btn:hover,
 .choice-btn:active {
-  transform: translateY(0) scale(0.98);
-  box-shadow: 0 0 12px rgba(255,255,255,0.3);
+  background: var(--white);
+  color: var(--black);
 }
 
 .repair-btn {
@@ -1395,7 +1397,8 @@ body::before {
   opacity: 0.6;
 }
 
-.remove-btn:hover {
+.remove-btn:hover,
+.remove-btn:active {
   opacity: 1;
 }
 .shells-content::-webkit-scrollbar {
