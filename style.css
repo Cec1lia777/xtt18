@@ -711,25 +711,26 @@ body::before {
 .cassette-after-img {
   position: absolute;
   bottom: 0;
-  width: 50%;
+  left: 50%;
+  width: auto;
   height: 60vh;
   object-fit: contain;
   object-position: bottom center;
   transition: opacity 0.8s ease;
 }
 
-@media (orientation: portrait) {
-  .cassette-after-img {
-    height: 72vh;
-  }
-}
-
 .cassette-after-left {
-  left: 0;
+  transform: translateX(-100%);
 }
 
 .cassette-after-right {
-  right: 0;
+  transform: translateX(0);
+}
+
+@media (orientation: portrait) {
+  .cassette-after-img {
+    height: 78vh;
+  }
 }
 
 /* 贝壳沙滩页 - 长卷轴滚动 */
