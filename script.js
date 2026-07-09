@@ -518,8 +518,14 @@ function toggleWavesMute() {
   wavesMuteBtn.classList.toggle('muted', wavesMuted);
 }
 
-// 控制面板：调节背景音乐音量
+// 控制面板：调节背景音乐音量（触摸设备改为静音切换，因 iOS 不允许 JS 调音量）
 function changeBgmVolume(delta) {
+  if (window.matchMedia('(pointer: coarse)').matches) {
+    bgmAudio.muted = !bgmAudio.muted;
+    bgmVolDownBtn.style.opacity = bgmAudio.muted ? '0.3' : '1';
+    bgmVolUpBtn.style.opacity = bgmAudio.muted ? '0.3' : '1';
+    return;
+  }
   bgmVolume = Math.max(0, Math.min(1, bgmVolume + delta));
   bgmAudio.volume = bgmVolume;
   bgmVolDownBtn.style.opacity = bgmVolume <= 0 ? '0.2' : '1';
@@ -647,10 +653,28 @@ function checkIgnition() {
   }
 }
 
+// 在用户手势中预先授权 audio 元素，使后续 setTimeout 中的 play 不被浏览器阻止
+function authorizeAudio() {
+  [wavesAudio, bgmAudio, voiceAudio, sfxAudio, birthdayAudio].forEach(audio => {
+    if (!audio || !audio.paused) return;
+    const wasMuted = audio.muted;
+    audio.muted = true;
+    audio.play().then(() => {
+      audio.pause();
+      audio.currentTime = 0;
+    }).catch(() => {}).finally(() => {
+      audio.muted = wasMuted;
+    });
+  });
+}
+
 // 点燃蜡烛
 function igniteCandle() {
   // 防止重复触发
   matchImg.style.pointerEvents = 'none';
+
+  // 在用户手势内授权后续可能被延迟播放的音频
+  authorizeAudio();
 
   // 先黑屏
   screenOverlay.classList.add('active');
@@ -722,6 +746,9 @@ function showWishHint() {
 // 吹蜡烛
 function blowCandle() {
   blowBtn.classList.remove('show');
+
+  // 在用户手势内授权后续可能被延迟播放的音频
+  authorizeAudio();
 
   // 立即播放吹蜡烛音效并切换到 cake_after
   sfxAudio.src = 'assets/audio/sfx/blow.m4a';
