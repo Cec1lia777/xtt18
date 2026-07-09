@@ -975,6 +975,12 @@ body::before {
   word-break: break-word;
 }
 
+.win-text.placeholder-text,
+.gallery-detail-text.placeholder-text {
+  color: #777777;
+  font-style: italic;
+}
+
 .video-volume {
   margin-top: 0.5rem;
   display: flex;

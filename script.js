@@ -36,7 +36,7 @@ const shellNames = [
   'ly', 'rjr', 'ss', 'szj', 'tlr',
   'wrx', 'xjz', 'zyx', 'zyz', 'wsa',
   'CLY', 'lcy', 'wzy', 'yjx', 'ydd',
-  'shell21'
+  'lyc'
 ];
 
 // 自动生成贝壳数据
@@ -532,6 +532,11 @@ function changeVideoVolume(delta) {
   updateVideoVolumeUI(newVolume);
 }
 
+// 判断是否为占位文字
+function isPlaceholderText(text) {
+  return text.trim() === '*这个人很高冷，想说的都在图里了*';
+}
+
 // 加载弹窗文本
 function loadWinText() {
   const shell = shellsData[currentShellIndex];
@@ -541,11 +546,13 @@ function loadWinText() {
   const defaultText = shell.texts[currentPhotoIndex] || '';
 
   winText.textContent = defaultText.trim();
+  winText.classList.toggle('placeholder-text', isPlaceholderText(defaultText));
   fetch(textPath)
     .then(res => res.ok ? res.text() : '')
     .then(text => {
       if (text.trim()) {
         winText.textContent = text.trim();
+        winText.classList.toggle('placeholder-text', isPlaceholderText(text));
       }
     })
     .catch(() => {
@@ -1523,11 +1530,13 @@ function loadGalleryDetailText() {
   const defaultText = shell.texts[galleryPhotoIndex] || '';
 
   galleryDetailText.textContent = defaultText.trim();
+  galleryDetailText.classList.toggle('placeholder-text', isPlaceholderText(defaultText));
   fetch(textPath)
     .then(res => res.ok ? res.text() : '')
     .then(text => {
       if (text.trim()) {
         galleryDetailText.textContent = text.trim();
+        galleryDetailText.classList.toggle('placeholder-text', isPlaceholderText(text));
       }
     })
     .catch(() => {});
