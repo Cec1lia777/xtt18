@@ -248,7 +248,7 @@ function bindEvents() {
 
   // ending 页
   returnBtn.addEventListener('click', closeGiftView);
-  meowBtn.addEventListener('click', returnToHome);
+  // meowBtn 的点击事件在 closeGiftView 中动态绑定，确保每次显示后都能点击
 
   // 坏掉的随身听场景
   storyText.addEventListener('click', advanceStoryText);
@@ -716,6 +716,8 @@ function setupMatchDrag() {
 
   const startDrag = (x, y) => {
     isDragging = true;
+    // 在用户开始拖拽时授权音频，确保后续点火音效能被播放
+    authorizeAudio();
   };
 
   const moveDrag = (x, y) => {
@@ -788,9 +790,6 @@ function authorizeAudio() {
 function igniteCandle() {
   // 防止重复触发
   matchImg.style.pointerEvents = 'none';
-
-  // 在用户手势内授权后续可能被延迟播放的音频
-  authorizeAudio();
 
   // 先黑屏
   screenOverlay.classList.add('active');
@@ -1239,6 +1238,9 @@ function closeGiftView() {
   meowBtn.style.display = 'block';
   void meowBtn.offsetWidth;
   meowBtn.classList.add('show');
+
+  // 重新绑定 meow 按钮点击事件
+  meowBtn.addEventListener('click', returnToHome, { once: true });
 
   // 重新给 bottle 绑定点击事件，可再次打开礼物
   endingBottle.addEventListener('click', showGifts, { once: true });

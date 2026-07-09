@@ -647,6 +647,8 @@ body::before {
 
 .meow-btn {
   display: none;
+  position: relative;
+  z-index: 10;
   margin-top: 1.5rem;
   font-size: 1rem;
   padding: 0.7rem 1.6rem;
@@ -655,6 +657,8 @@ body::before {
   border: 2px solid var(--white);
   letter-spacing: 0.1em;
   animation: fadeIn 1s ease;
+  cursor: pointer;
+  pointer-events: auto;
 }
 
 .meow-btn.show {
