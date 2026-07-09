@@ -197,10 +197,32 @@ let galleryVoicePlaying = false;
 // 初始化
 function init() {
   bindEvents();
+  setShellsBackground();
   if (shellsBgImg.complete) {
     setupShells();
   } else {
     shellsBgImg.addEventListener('load', setupShells, { once: true });
+  }
+
+  // 横竖屏切换时更换贝壳背景图并重新布局
+  window.matchMedia('(orientation: portrait)').addEventListener('change', () => {
+    setShellsBackground();
+    if (shellsBgImg.complete) {
+      setupShells();
+    } else {
+      shellsBgImg.addEventListener('load', setupShells, { once: true });
+    }
+  });
+}
+
+// 根据横竖屏选择贝壳背景图
+function setShellsBackground() {
+  const isPortrait = window.matchMedia('(orientation: portrait)').matches;
+  const newSrc = isPortrait
+    ? 'assets/images/backgrounds/beach_shells_long.jpg'
+    : 'assets/images/backgrounds/beach_shells.jpg';
+  if (!shellsBgImg.src.includes(newSrc)) {
+    shellsBgImg.src = newSrc;
   }
 }
 
