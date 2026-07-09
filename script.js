@@ -10,7 +10,7 @@ const shellMediaFiles = [
   ['photo_01_01.JPG', 'photo_01_02.MP4'],   // 贝壳 1
   ['photo_02_01.MP4'],   // 贝壳 2
   ['photo_03_01.JPG', 'photo_03_02.MP4', 'photo_03_03.JPG', 'photo_03_04.JPG', 'photo_03_05.JPG', 'photo_03_06.JPG', 'photo_03_07.MP4', 'photo_03_08.JPG', 'photo_03_09.JPG', 'photo_03_10.JPG', 'photo_03_11.JPG', 'photo_03_12.JPG', 'photo_03_13.jpg', 'photo_03_14.jpg'],   // 贝壳 3
-  ['photo_04_01.JPG', 'photo_04_02.jpg', 'photo_04_03.jpg'],   // 贝壳 4
+  ['photo_04_01.JPG', 'photo_04_02.jpg', 'photo_04_03.jpg', 'photo_04_04.jpg'],   // 贝壳 4
   ['photo_05_01.jpg', 'photo_05_02.jpg'],   // 贝壳 5
   ['photo_06_01.jpg', 'photo_06_02.jpg'],   // 贝壳 6
   ['photo_07_01.JPG', 'photo_07_02.JPG', 'photo_07_03.JPG', 'photo_07_04.JPG', 'photo_07_05.JPG', 'photo_07_06.JPG', 'photo_07_07.JPG', 'photo_07_08.JPG', 'photo_07_09.MP4'],   // 贝壳 7
@@ -56,6 +56,12 @@ const memoryPlaylist = [
   'assets/audio/bgm/memory_02.mp3',
   'assets/audio/bgm/memory_03.mp3'
 ];
+
+// 每个视频文件的默认音量（0-1）
+const videoVolumes = {
+  'photo_02_01': 1.0,   // 贝壳 2 视频 louder
+  'photo_09_01': 0.25,  // 贝壳 9 视频 quieter
+};
 
 // DOM 元素
 const wavesAudio = document.getElementById('wavesAudio');
@@ -114,6 +120,10 @@ const winClose = document.getElementById('winClose');
 const winPhoto = document.getElementById('winPhoto');
 const winText = document.getElementById('winText');
 const winCaption = document.getElementById('winCaption');
+const videoVolume = document.getElementById('videoVolume');
+const videoVolDown = document.getElementById('videoVolDown');
+const videoVolUp = document.getElementById('videoVolUp');
+const videoVolValue = document.getElementById('videoVolValue');
 const photoPrev = document.getElementById('photoPrev');
 const photoNext = document.getElementById('photoNext');
 
@@ -220,6 +230,10 @@ function bindEvents() {
   bgmVolDownBtn.addEventListener('click', () => changeBgmVolume(-0.05));
   bgmVolUpBtn.addEventListener('click', () => changeBgmVolume(0.05));
   skipBtn.addEventListener('click', skipToCake);
+
+  // 弹窗视频音量控制
+  videoVolDown.addEventListener('click', () => changeVideoVolume(-0.1));
+  videoVolUp.addEventListener('click', () => changeVideoVolume(0.1));
 
   // ending 页
   returnBtn.addEventListener('click', closeGiftView);
@@ -427,14 +441,21 @@ function renderWindowPhoto() {
   winPhoto.innerHTML = '';
 
   if (isVideo) {
+    const fileName = src.split('/').pop().replace(/\.[^.]+$/, '');
+    const volume = videoVolumes[fileName] !== undefined ? videoVolumes[fileName] : 0.75;
+
     const video = document.createElement('video');
+    video.id = 'currentWinVideo';
     video.src = src;
     video.autoplay = true;
     video.loop = true;
     video.muted = false;
-    video.volume = 0.75;
+    video.volume = volume;
     video.playsInline = true;
     winPhoto.appendChild(video);
+
+    videoVolume.style.display = 'flex';
+    updateVideoVolumeUI(volume);
   } else {
     const img = document.createElement('img');
     img.src = src;
@@ -443,6 +464,8 @@ function renderWindowPhoto() {
       img.src = 'assets/images/placeholder.svg';
     };
     winPhoto.appendChild(img);
+
+    videoVolume.style.display = 'none';
   }
 
   winCaption.textContent = `${currentPhotoIndex + 1} / ${media.length}`;
@@ -451,6 +474,25 @@ function renderWindowPhoto() {
 
   // 加载对应文本
   loadWinText();
+}
+
+// 更新弹窗视频音量显示
+function updateVideoVolumeUI(volume) {
+  videoVolValue.textContent = `${Math.round(volume * 100)}%`;
+}
+
+// 调整弹窗视频音量
+function changeVideoVolume(delta) {
+  const video = document.getElementById('currentWinVideo');
+  if (!video) return;
+
+  const newVolume = Math.max(0, Math.min(1, video.volume + delta));
+  video.volume = newVolume;
+
+  const fileName = video.src.split('/').pop().replace(/\.[^.]+$/, '');
+  videoVolumes[fileName] = newVolume;
+
+  updateVideoVolumeUI(newVolume);
 }
 
 // 加载弹窗文本
@@ -507,8 +549,18 @@ function closeWindow() {
 
   // 检查是否所有贝壳都被收集
   if (collectedShells.size >= shellsData.length) {
-    setTimeout(startMatchScene, 800);
+    setTimeout(showLastShellText, 800);
   }
+}
+
+// 最后一个贝壳捡完后显示过渡文字，再进入火柴场景
+function showLastShellText() {
+  storyText.textContent = '沙滩上…已经没有贝壳了啊。';
+  storyText.classList.add('show');
+  setTimeout(() => {
+    storyText.classList.remove('show');
+    setTimeout(startMatchScene, 800);
+  }, 2000);
 }
 
 // 控制面板：静音海浪
@@ -1079,7 +1131,7 @@ function showGifts() {
     endingNecklace.classList.add('hint-glow');
   }, 6000);
 
-  endingNecklace.addEventListener('click', enterGalleryScene, { once: true });
+  endingNecklace.addEventListener('click', enterGalleryScene);
   endingLetter.addEventListener('click', openLetterZoom);
 
   // 显示 CLOSE 按钮
@@ -1239,6 +1291,7 @@ function returnToHome() {
 
 // 进入祝福总库
 function enterGalleryScene() {
+  if (currentScene === 'gallery') return;
   if (hintTimer) {
     clearTimeout(hintTimer);
     hintTimer = null;

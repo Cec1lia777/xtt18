@@ -968,6 +968,34 @@ body::before {
   word-break: break-word;
 }
 
+.video-volume {
+  margin-top: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-size: 0.85rem;
+  color: var(--black);
+}
+
+.video-vol-btn {
+  background: var(--win-bg);
+  border: 2px outset var(--win-border);
+  padding: 0.2rem 0.5rem;
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+.video-vol-btn:active {
+  border-style: inset;
+}
+
+.video-vol-value {
+  min-width: 2.5rem;
+  text-align: center;
+}
+
 /* 火柴层 */
 .match-layer {
   position: fixed;
