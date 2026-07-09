@@ -176,7 +176,8 @@ const skipBtn = document.getElementById('skipBtn');
 // 背景图尺寸配置（用于精确计算贝壳位置）
 const BG_IMAGE_WIDTH = 1312;
 const BG_IMAGE_HEIGHT = 3424;
-const BG_TOP_MARGIN = 800;
+const BG_TOP_MARGIN_RATIO = 0.18;
+const BG_BOTTOM_MARGIN_RATIO = 0.04;
 
 // 状态
 let currentScene = 'home';
@@ -361,14 +362,19 @@ function setupShells() {
   shellsContainer.innerHTML = '';
 
   // 根据背景图实际显示高度计算
-  const stageHeight = shellsBgImg.clientHeight || window.innerWidth * (BG_IMAGE_HEIGHT / BG_IMAGE_WIDTH);
+  let stageHeight = shellsBgImg.clientHeight;
+  if (!stageHeight) {
+    const naturalWidth = shellsBgImg.naturalWidth || BG_IMAGE_WIDTH;
+    const naturalHeight = shellsBgImg.naturalHeight || BG_IMAGE_HEIGHT;
+    stageHeight = window.innerWidth * (naturalHeight / naturalWidth);
+  }
   scrollStage.style.minHeight = `${stageHeight}px`;
 
   const rows = 11;
   const cols = 2;
   const positions = [];
-  const bottomMargin = 120;
-  const usableTop = BG_TOP_MARGIN;
+  const bottomMargin = stageHeight * BG_BOTTOM_MARGIN_RATIO;
+  const usableTop = stageHeight * BG_TOP_MARGIN_RATIO;
   const usableHeight = Math.max(stageHeight - usableTop - bottomMargin, 100);
 
   for (let r = 0; r < rows; r++) {

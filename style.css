@@ -712,10 +712,16 @@ body::before {
   position: absolute;
   bottom: 0;
   width: 50%;
-  height: 66.67vh;
+  height: 60vh;
   object-fit: contain;
   object-position: bottom center;
   transition: opacity 0.8s ease;
+}
+
+@media (orientation: portrait) {
+  .cassette-after-img {
+    height: 72vh;
+  }
 }
 
 .cassette-after-left {
@@ -755,7 +761,7 @@ body::before {
   left: 0;
   z-index: 1;
   width: 100%;
-  min-height: 100%;
+  height: 100%;
   padding: 0;
 }
 
@@ -781,7 +787,7 @@ body::before {
 .shells-container {
   position: relative;
   width: 100%;
-  min-height: 400vh;
+  height: 100%;
   max-width: 100%;
   margin: 0 auto;
 }
