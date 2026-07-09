@@ -256,6 +256,9 @@ function bindEvents() {
   cakeScene.addEventListener('mousemove', trackCakeMouse);
   cakeScene.addEventListener('mouseleave', resetCakeMouse);
 
+  // 蛋糕页点击空白处彩蛋
+  cakeScene.addEventListener('click', handleCakeEasterEgg);
+
   // 音频播放结束后的处理
   bgmAudio.addEventListener('ended', playNextMemoryTrack);
   voiceAudio.addEventListener('ended', () => {
@@ -594,12 +597,24 @@ function closeWindow() {
 
 // 最后一个贝壳捡完后显示过渡文字，再进入火柴场景
 function showLastShellText() {
-  storyText.textContent = '沙滩上…已经没有贝壳了啊。';
-  storyText.classList.add('show');
-  setTimeout(() => {
-    storyText.classList.remove('show');
-    setTimeout(startMatchScene, 800);
-  }, 2000);
+  const lines = ['沙滩上…已经没有贝壳了吗？', '居然就这样捡完了。'];
+  let index = 0;
+
+  const showLine = () => {
+    storyText.textContent = lines[index];
+    storyText.classList.add('show');
+    setTimeout(() => {
+      storyText.classList.remove('show');
+      index++;
+      if (index < lines.length) {
+        setTimeout(showLine, 1500);
+      } else {
+        setTimeout(startMatchScene, 1500);
+      }
+    }, 4000);
+  };
+
+  showLine();
 }
 
 // 控制面板：静音海浪
@@ -1228,6 +1243,42 @@ function trackCakeMouse(e) {
 
 function resetCakeMouse() {
   cakeImg.style.transform = 'translate(0, 0)';
+}
+
+// 蛋糕页点击空白处的小彩蛋
+const cakeEasterEggTexts = [
+  'Meow > - <',
+  '桃桃生日快乐',
+  '喵',
+  '喵～喵喵～喵～喵～～喵～～',
+  'happy birthday',
+  '祝你生日快乐',
+  '许个愿吧',
+];
+
+function handleCakeEasterEgg(e) {
+  if (currentScene !== 'cake') return;
+  if (
+    e.target === cakeImg ||
+    e.target === wishBtn ||
+    e.target === blowBtn ||
+    e.target.closest('.birthday-text') ||
+    e.target === storyText
+  ) {
+    return;
+  }
+
+  const text = cakeEasterEggTexts[Math.floor(Math.random() * cakeEasterEggTexts.length)];
+  const el = document.createElement('div');
+  el.className = 'cake-easter-egg';
+  el.textContent = text;
+  el.style.left = `${e.clientX}px`;
+  el.style.top = `${e.clientY}px`;
+  document.body.appendChild(el);
+
+  setTimeout(() => {
+    if (el.parentNode) el.parentNode.removeChild(el);
+  }, 1600);
 }
 
 // 返回首页

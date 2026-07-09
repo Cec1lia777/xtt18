@@ -1167,7 +1167,21 @@ body::before {
 
   z-index: 10000;
 
-  transition: opacity 0.5s ease, background 0.2s, color 0.2s;
+  transition: opacity 0.5s ease, background 0.2s, color 0.2s, transform 0.2s, box-shadow 0.2s;
+
+  font-family: 'Silkscreen', monospace;
+  letter-spacing: 0.08em;
+  animation: blowBtnFloat 3s ease-in-out infinite, blowBtnGlow 2.5s ease-in-out infinite;
+}
+
+@keyframes blowBtnFloat {
+  0%, 100% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-6px); }
+}
+
+@keyframes blowBtnGlow {
+  0%, 100% { box-shadow: 0 0 8px rgba(255,255,255,0.25), inset 0 0 8px rgba(255,255,255,0.05); }
+  50% { box-shadow: 0 0 24px rgba(255,255,255,0.6), inset 0 0 12px rgba(255,255,255,0.15); }
 }
 
 .blow-btn.show {
@@ -1179,6 +1193,33 @@ body::before {
 .blow-btn:active {
   background: var(--white);
   color: var(--black);
+  box-shadow: 0 0 32px rgba(255,255,255,0.9);
+  transform: translate(-50%, -50%) scale(1.06);
+  animation-play-state: paused;
+}
+
+/* 蛋糕页点击彩蛋 */
+.cake-easter-egg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  pointer-events: none;
+  color: var(--white);
+  font-family: 'Silkscreen', monospace;
+  font-size: 0.85rem;
+  letter-spacing: 0.06em;
+  text-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 16px rgba(255,255,255,0.4);
+  white-space: nowrap;
+  z-index: 1000;
+  transform: translate(-50%, -50%);
+  animation: cakeEggFloat 1.6s ease-out forwards;
+}
+
+@keyframes cakeEggFloat {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+  18% { opacity: 1; transform: translate(-50%, -50%) scale(1.15); }
+  28% { transform: translate(-50%, -50%) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, -140%) scale(0.85); }
 }
 
 /* 闭眼动画 */
@@ -1313,7 +1354,34 @@ body::before {
   background: transparent;
   color: var(--white);
   border: 2px solid var(--white);
-  transition: all 0.5s ease;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.choice-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+}
+
+.choice-btn:hover {
+  background: rgba(255,255,255,0.12);
+  box-shadow: 0 0 20px rgba(255,255,255,0.4);
+  transform: translateY(-2px) scale(1.02);
+  letter-spacing: 0.04em;
+}
+
+.choice-btn:hover::before {
+  transform: translateX(100%);
+}
+
+.choice-btn:active {
+  transform: translateY(0) scale(0.98);
+  box-shadow: 0 0 12px rgba(255,255,255,0.3);
 }
 
 .repair-btn {
@@ -1327,7 +1395,9 @@ body::before {
   opacity: 0.6;
 }
 
-/* 滚动条 */
+.remove-btn:hover {
+  opacity: 1;
+}
 .shells-content::-webkit-scrollbar {
   width: 6px;
 }
